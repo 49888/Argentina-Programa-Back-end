@@ -2,8 +2,10 @@ package main.dao;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ public class SkillsDaoImp implements SkillsDao {
     @PersistenceContext
     EntityManager entityManager;
 
+
     @Override
     public List<Skill> getSkills() {
 
@@ -27,4 +30,29 @@ public class SkillsDaoImp implements SkillsDao {
         return result;
     }
     
+    @Override
+    public void deleteSkill(Long id) {
+        
+        Skill skill = entityManager.find(Skill.class, id);
+
+        entityManager.remove(skill);
+    }
+
+    @Override
+    public void createSkill(Skill skill) {
+        
+        entityManager.merge(skill);  
+    }
+
+    @Override
+    public void updateSkill(Long id, Skill aux) {
+        
+        Skill skill = entityManager.find(Skill.class, id);
+
+        if(aux.getTitle() != null) skill.setTitle(aux.getTitle());
+
+        if(aux.getPercentage() != -1) skill.setPercentage(aux.getPercentage());
+
+        if(aux.getImageURL() != null) skill.setImageURL(aux.getImageURL());
+    }
 }

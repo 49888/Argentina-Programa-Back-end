@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity @Table(name = "skills")
 public class Skill {
 
-    @Getter @Setter @Column(name = "id") @Id
+    @Id @Getter @Setter @Column(name = "id")
     private long id;
     
     @Getter @Setter @Column(name = "title")
@@ -25,7 +25,7 @@ public class Skill {
 
 
     public Skill(){}
-    
+
     public Skill(String title, int percentage, String imageURL){
 
         this.title = title;
