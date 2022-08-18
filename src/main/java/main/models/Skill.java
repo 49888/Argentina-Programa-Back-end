@@ -26,12 +26,20 @@ public class Skill {
 
     public Skill(){}
 
-    public Skill(String title, int percentage, String imageURL){
+    public Skill(long id, String title, int percentage, String imageURL){
+
+        this.id = id;
 
         this.title = title;
 
         this.percentage = percentage;
 
         this.imageURL = imageURL;
+    }
+
+    @Override
+    public Skill clone() {
+        
+        return new Skill(id, title, percentage, imageURL);
     }
 }

@@ -1,4 +1,4 @@
-package main.dao;
+package main.dao.skills;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ public interface SkillsDao {
 
     void createSkill(Skill skill);
 
-    void updateSkill(Long id, Skill skill);
+    Skill updateSkill(Long id, Skill skill);
 }

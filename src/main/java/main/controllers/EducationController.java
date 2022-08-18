@@ -9,51 +9,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import main.dao.skills.SkillsDao;
-import main.models.Skill;
+import main.dao.education.EducationDao;
+import main.models.Education;
 
 
-@RestController @RequestMapping("/api/skills")
-public class SkillsController {
-
+@RestController @RequestMapping("/api/education")
+public class EducationController {
+    
     @Autowired
-    private SkillsDao skillsDao;
+    private EducationDao educationDao;
 
     //-> GET
     @RequestMapping(value = "/get")
-    public List<Skill> getSkills(){
+    public List<Education> getEducation(){
 
-        return skillsDao.getSkills();
+        List<Education> list = educationDao.getEducation();
+        
+        return list;
     }
 
     //-> DELETE
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public String deleteSkills(@PathVariable long id){
+    public String deleteEducation(@PathVariable long id){
 
         try {
-            skillsDao.deleteSkill(id);
+            educationDao.deleteEducation(id);
             
         } catch (Exception e) {
 
-            return "No se pudo eliminar la Skill: " + e.getMessage();
+            return "No se pudo eliminar: " + e.getMessage();
         }
 
-        return "Skill: " + id + " eliminada";
+        return "Education: " + id + " eliminada";
     }
 
     //-> CREATE
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Skill createSkills(@RequestBody Skill skill){
+    public Education createEducation(@RequestBody Education education){
 
-        skillsDao.createSkill(skill);
+        educationDao.createEducation(education);
 
-        return skill;
+        return education;
     }
 
     //-> UPDATE
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public Skill updateSkills(@PathVariable Long id, @RequestBody Skill skill){
+    public Education updateEducation(@PathVariable Long id, @RequestBody Education education){
 
-        return skillsDao.updateSkill(id, skill);
+        return educationDao.updateEducation(id, education);
     }
 }

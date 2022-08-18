@@ -1,4 +1,4 @@
-package main.dao;
+package main.dao.skills;
 
 import java.util.List;
 
@@ -45,14 +45,25 @@ public class SkillsDaoImp implements SkillsDao {
     }
 
     @Override
-    public void updateSkill(Long id, Skill aux) {
+    public Skill updateSkill(Long id, Skill aux) {
         
         Skill skill = entityManager.find(Skill.class, id);
 
-        if(aux.getTitle() != null) skill.setTitle(aux.getTitle());
+        if(skill != null) {
 
-        if(aux.getPercentage() != -1) skill.setPercentage(aux.getPercentage());
+            if(aux.getTitle() != null) skill.setTitle(aux.getTitle());
 
-        if(aux.getImageURL() != null) skill.setImageURL(aux.getImageURL());
+            if(aux.getPercentage() != -1) skill.setPercentage(aux.getPercentage());
+
+            if(aux.getImageURL() != null) skill.setImageURL(aux.getImageURL());
+
+            return skill.clone();
+        }
+        else {
+
+            return null;
+        }
+
+        
     }
 }
