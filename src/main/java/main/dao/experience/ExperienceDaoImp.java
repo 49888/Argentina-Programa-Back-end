@@ -1,5 +1,6 @@
 package main.dao.experience;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -28,17 +29,39 @@ public class ExperienceDaoImp implements ExperienceDao {
     }
 
     @Override
-    public void createExperience(Experience experience) {
+    public Experience createExperience(Experience experience) {
         
-        entityManager.merge(experience);
+        Experience aux = entityManager.merge(experience).clone();
+
+
+        List<Experience> result = entityManager.createQuery("FROM Experience").getResultList();
+
+        Long id = 0l;
+        
+        Iterator<Experience> iterable = result.iterator();
+
+        while(iterable.hasNext()){
+
+            Experience item = iterable.next();
+
+            if(item.getId() > id) id = item.getId();
+        }
+
+        aux.setId(id);
+
+        return aux;
     }
 
     @Override
-    public void deleteExperience(long id) {
+    public Experience deleteExperience(long id) {
         
         Experience experience = entityManager.find(Experience.class, id);
 
+        Experience aux = experience.clone();
+
         entityManager.remove(experience);
+
+        return aux;
     }
 
     @Override

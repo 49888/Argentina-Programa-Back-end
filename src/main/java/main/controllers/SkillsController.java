@@ -3,6 +3,8 @@ package main.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import main.dao.skills.SkillsDao;
 import main.models.Skill;
+import net.bytebuddy.asm.Advice.Return;
 
 
 @RestController @RequestMapping("/api/skills")
@@ -28,26 +31,27 @@ public class SkillsController {
 
     //-> DELETE
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public String deleteSkills(@PathVariable long id){
+    public ResponseEntity deleteSkills(@PathVariable long id){
+
+        Skill skill = null;
 
         try {
-            skillsDao.deleteSkill(id);
+            skill = skillsDao.deleteSkill(id);
             
         } catch (Exception e) {
 
-            return "No se pudo eliminar la Skill: " + e.getMessage();
+            return new ResponseEntity<String>("not found id", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return "Skill: " + id + " eliminada";
+        return new ResponseEntity<Skill>(skill, HttpStatus.OK);
     }
 
     //-> CREATE
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Skill createSkills(@RequestBody Skill skill){
 
-        skillsDao.createSkill(skill);
-
-        return skill;
+        
+        return skillsDao.createSkill(skill);
     }
 
     //-> UPDATE

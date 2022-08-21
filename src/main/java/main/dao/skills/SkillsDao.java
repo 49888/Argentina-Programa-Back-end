@@ -8,9 +8,9 @@ public interface SkillsDao {
     
     List<Skill> getSkills();
 
-    void deleteSkill(Long id);
+    Skill deleteSkill(Long id);
 
-    void createSkill(Skill skill);
+    Skill createSkill(Skill skill);
 
     Skill updateSkill(Long id, Skill skill);
 }

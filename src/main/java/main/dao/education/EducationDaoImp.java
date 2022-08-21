@@ -1,5 +1,6 @@
 package main.dao.education;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -28,17 +29,39 @@ public class EducationDaoImp implements EducationDao {
     }
 
     @Override
-    public void createEducation(Education education) {
+    public Education createEducation(Education education) {
         
-        entityManager.merge(education);
+        Education aux = entityManager.merge(education).clone();
+
+
+        List<Education> result = entityManager.createQuery("FROM Education").getResultList();
+
+        Long id = 0l;
+        
+        Iterator<Education> iterable = result.iterator();
+
+        while(iterable.hasNext()){
+
+            Education item = iterable.next();
+
+            if(item.getId() > id) id = item.getId();
+        }
+
+        aux.setId(id);
+
+        return aux;
     }
 
     @Override
-    public void deleteEducation(long id) {
+    public Education deleteEducation(long id) {
         
         Education education = entityManager.find(Education.class, id);
 
+        Education aux = education.clone();
+
         entityManager.remove(education);
+
+        return aux;
     }
 
     @Override

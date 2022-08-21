@@ -1,11 +1,12 @@
 package main.dao.skills;
 
+import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.Resource;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
+
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,17 +32,40 @@ public class SkillsDaoImp implements SkillsDao {
     }
     
     @Override
-    public void deleteSkill(Long id) {
+    public Skill deleteSkill(Long id) {
         
         Skill skill = entityManager.find(Skill.class, id);
 
+        Skill aux = skill.clone();
+
         entityManager.remove(skill);
+
+        return aux;
     }
 
     @Override
-    public void createSkill(Skill skill) {
+    public Skill createSkill(Skill skill) {
+
+        Skill aux = entityManager.merge(skill).clone();
+
+
+        List<Skill> result = entityManager.createQuery("FROM Skill").getResultList();
+
+        Long id = 0l;
         
-        entityManager.merge(skill);  
+        Iterator<Skill> iterable = result.iterator();
+
+        while(iterable.hasNext()){
+
+            Skill item = iterable.next();
+
+            if(item.getId() > id) id = item.getId();
+        }
+
+        aux.setId(id);
+
+        return aux;
+
     }
 
     @Override
@@ -55,7 +79,7 @@ public class SkillsDaoImp implements SkillsDao {
 
             if(aux.getPercentage() != -1) skill.setPercentage(aux.getPercentage());
 
-            if(aux.getImageURL() != null) skill.setImageURL(aux.getImageURL());
+            if(aux.getImg() != null) skill.setImg(aux.getImg());
 
             return skill.clone();
         }

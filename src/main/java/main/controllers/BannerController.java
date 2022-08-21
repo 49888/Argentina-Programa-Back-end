@@ -3,7 +3,6 @@ package main.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,11 +22,11 @@ public class BannerController {
 
     //-> GET
     @RequestMapping(value = "/get")
-    public List<Banner> getBanner(){
+    public Banner getBanner(){
 
         List<Banner> list = bannerDao.getBanner();
 
-        return list;
+        return list.get(0);
     }
 
     //-> UPDATE

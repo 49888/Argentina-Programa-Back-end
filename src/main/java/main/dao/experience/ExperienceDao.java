@@ -8,9 +8,9 @@ public interface ExperienceDao {
     
     List<Experience> getExperience();
 
-    void deleteExperience(long id);
+    Experience deleteExperience(long id);
 
-    void createExperience(Experience experience);
+    Experience createExperience(Experience experience);
 
     Experience updateExperience(Long id, Experience experience);
 }

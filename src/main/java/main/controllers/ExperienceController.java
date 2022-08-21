@@ -4,6 +4,8 @@ package main.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,26 +33,26 @@ public class ExperienceController {
 
     //-> DELETE
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public String deleteExperience(@PathVariable long id){
+    public ResponseEntity deleteExperience(@PathVariable long id){
+
+        Experience experience = null;
 
         try {
-            experienceDao.deleteExperience(id);
+            experience = experienceDao.deleteExperience(id);
             
         } catch (Exception e) {
 
-            return "No se pudo eliminar: " + e.getMessage();
+            return new ResponseEntity<String>("not found id", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return "Experience: " + id + " eliminada";
+        return new ResponseEntity<Experience>(experience, HttpStatus.OK);
     }
 
     //-> CREATE
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Experience createExperience(@RequestBody Experience experience){
 
-        experienceDao.createExperience(experience);
-
-        return experience;
+        return experienceDao.createExperience(experience);
     }
 
     //-> UPDATE

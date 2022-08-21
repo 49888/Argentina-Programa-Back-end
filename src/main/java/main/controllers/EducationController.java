@@ -3,6 +3,8 @@ package main.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,26 +32,26 @@ public class EducationController {
 
     //-> DELETE
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public String deleteEducation(@PathVariable long id){
+    public ResponseEntity deleteEducation(@PathVariable long id){
+
+        Education education = null;
 
         try {
-            educationDao.deleteEducation(id);
+            education = educationDao.deleteEducation(id);
             
         } catch (Exception e) {
 
-            return "No se pudo eliminar: " + e.getMessage();
+            return new ResponseEntity<String>("not found id", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return "Education: " + id + " eliminada";
+        return new ResponseEntity<Education>(education, HttpStatus.OK);
     }
 
     //-> CREATE
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Education createEducation(@RequestBody Education education){
 
-        educationDao.createEducation(education);
-
-        return education;
+        return educationDao.createEducation(education);
     }
 
     //-> UPDATE

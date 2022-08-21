@@ -8,9 +8,9 @@ public interface EducationDao {
     
     List<Education> getEducation();
 
-    void deleteEducation(long id);
+    Education deleteEducation(long id);
 
-    void createEducation(Education education);
+    Education createEducation(Education education);
 
     Education updateEducation(Long id, Education education);
 }

@@ -18,15 +18,15 @@ public class Skill {
     private String title;
 
     @Getter @Setter @Column(name = "percentage")
-    private int percentage;
+    private Integer percentage;
 
     @Getter @Setter @Column(name = "image")    
-    private String imageURL;
+    private String img;
 
 
     public Skill(){}
 
-    public Skill(long id, String title, int percentage, String imageURL){
+    public Skill(long id, String title, int percentage, String img){
 
         this.id = id;
 
@@ -34,12 +34,12 @@ public class Skill {
 
         this.percentage = percentage;
 
-        this.imageURL = imageURL;
+        this.img = img;
     }
 
     @Override
     public Skill clone() {
         
-        return new Skill(id, title, percentage, imageURL);
+        return new Skill(id, title, percentage, img);
     }
 }
