@@ -1,15 +1,20 @@
 package main.dao.education;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import main.models.Education;
+import main.services.FileService;
 
 @Repository @Transactional
 public class EducationDaoImp implements EducationDao {
@@ -17,7 +22,9 @@ public class EducationDaoImp implements EducationDao {
     @PersistenceContext
     EntityManager entityManager;
 
-
+    @Autowired
+    FileService fileService;
+    
     @Override
     public List<Education> getEducation() {
 
@@ -85,4 +92,36 @@ public class EducationDaoImp implements EducationDao {
         }
     }
     
+
+    @Override
+    public Education uploadFile(Long id, MultipartFile multipartFile) {
+
+        String url = null;
+        
+        try {
+            
+            String fileName = multipartFile.getOriginalFilename();
+
+            fileName = UUID.randomUUID().toString().concat(fileService.getExtension(fileName));
+
+            File file = fileService.convertToFile(multipartFile, fileName);
+
+            url = fileService.uploadFile(file, fileName);
+
+
+        }
+        catch (Exception e) {
+            url = e.getMessage();
+        }
+
+        Education education = null;
+
+        if(url != null){
+            education = entityManager.find(Education.class, id);
+
+            education.setImg(url);
+        }
+
+        return education;
+    }
 }

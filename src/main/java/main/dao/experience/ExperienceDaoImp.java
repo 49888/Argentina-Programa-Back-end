@@ -1,15 +1,20 @@
 package main.dao.experience;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import main.models.Experience;
+import main.services.FileService;
 
 @Repository @Transactional
 public class ExperienceDaoImp implements ExperienceDao {
@@ -17,6 +22,8 @@ public class ExperienceDaoImp implements ExperienceDao {
     @PersistenceContext
     EntityManager entityManager;
 
+    @Autowired
+    FileService fileService;
 
     @Override
     public List<Experience> getExperience() {
@@ -84,4 +91,37 @@ public class ExperienceDaoImp implements ExperienceDao {
         }
     }
     
+
+
+    @Override
+    public Experience uploadFile(Long id, MultipartFile multipartFile) {
+
+        String url = null;
+        
+        try {
+            
+            String fileName = multipartFile.getOriginalFilename();
+
+            fileName = UUID.randomUUID().toString().concat(fileService.getExtension(fileName));
+
+            File file = fileService.convertToFile(multipartFile, fileName);
+
+            url = fileService.uploadFile(file, fileName);
+
+
+        }
+        catch (Exception e) {
+            url = e.getMessage();
+        }
+
+        Experience experience = null;
+
+        if(url != null){
+            experience = entityManager.find(Experience.class, id);
+
+            experience.setImg(url);
+        }
+
+        return experience;
+    }
 }

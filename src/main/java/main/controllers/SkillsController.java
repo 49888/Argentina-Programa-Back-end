@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import main.dao.skills.SkillsDao;
 import main.models.Skill;
@@ -59,5 +61,13 @@ public class SkillsController {
     public Skill updateSkills(@PathVariable Long id, @RequestBody Skill skill){
 
         return skillsDao.updateSkill(id, skill);
+    }
+
+
+    //Upload Images
+    @RequestMapping(value = "/images/update", method = RequestMethod.POST)
+    public Skill updateImage(@RequestParam("id") long id, @RequestParam("file") MultipartFile multipartFile){
+
+        return skillsDao.uploadFile(id,  multipartFile);
     }
 }

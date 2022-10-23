@@ -2,6 +2,8 @@ package main.dao.education;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import main.models.Education;
 
 public interface EducationDao {
@@ -13,4 +15,6 @@ public interface EducationDao {
     Education createEducation(Education education);
 
     Education updateEducation(Long id, Education education);
+
+    Education uploadFile(Long id, MultipartFile multipartFile);
 }

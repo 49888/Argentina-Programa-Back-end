@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import main.dao.experience.ExperienceDao;
 import main.models.Experience;
@@ -60,5 +62,12 @@ public class ExperienceController {
     public Experience updateExperience(@PathVariable Long id, @RequestBody Experience experience){
 
         return experienceDao.updateExperience(id, experience);
+    }
+
+    //Upload Images
+    @RequestMapping(value = "/images/update", method = RequestMethod.POST)
+    public Experience updateImage(@RequestParam("id") long id, @RequestParam("file") MultipartFile multipartFile){
+
+        return experienceDao.uploadFile(id, multipartFile);
     }
 }

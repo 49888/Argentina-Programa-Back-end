@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import main.dao.banner.BannerDao;
 import main.models.Banner;
@@ -49,5 +50,14 @@ public class BannerController {
     public String createBanner(){
 
         return "No se puede crear otro banner";
+    }
+
+
+
+    //Upload Images
+    @RequestMapping(value = "/images/update", method = RequestMethod.POST)
+    public Banner updateImage(@RequestParam("to") String to, @RequestParam("file") MultipartFile multipartFile){
+
+        return bannerDao.uploadFile(1l, to, multipartFile);
     }
 }

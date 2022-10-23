@@ -1,20 +1,28 @@
 package main.dao.banner;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import main.models.Banner;
+import main.services.FileService;
 
 @Repository @Transactional
 public class BannerDaoImp implements BannerDao {
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Autowired
+    FileService fileService;
 
     @Override
     public List<Banner> getBanner() {
@@ -53,6 +61,40 @@ public class BannerDaoImp implements BannerDao {
 
 
         
+    }
+
+    @Override
+    public Banner uploadFile(Long id, String to, MultipartFile multipartFile) {
+
+        String url = null;
+        
+        try {
+            
+            String fileName = multipartFile.getOriginalFilename();
+
+            fileName = UUID.randomUUID().toString().concat(fileService.getExtension(fileName));
+
+            File file = fileService.convertToFile(multipartFile, fileName);
+
+            url = fileService.uploadFile(file, fileName);
+
+
+        }
+        catch (Exception e) {
+            url = e.getMessage();
+        }
+
+        Banner banner = null;
+
+        if(url != null){
+            banner = entityManager.find(Banner.class, id);
+
+            if(to.equals("banner")) banner.setBannerImg(url);
+
+            if(to.equals("perfil")) banner.setPerfilImg(url);
+        }
+
+        return banner;
     }
     
 }
