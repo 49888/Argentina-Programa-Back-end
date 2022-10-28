@@ -52,6 +52,12 @@ public class JwtConfig {
 
             auth.antMatchers("/api/auth/test").permitAll();
 
+            auth.antMatchers("/api/banner/get").permitAll();
+            auth.antMatchers("/api/education/get").permitAll();
+            auth.antMatchers("/api/experience/get").permitAll();
+            auth.antMatchers("/api/skills/get").permitAll();
+            auth.antMatchers("/api/projects/get").permitAll();
+
             auth.antMatchers("/api/auth/user").access("hasRole('USER') or hasRole('ADMIN')");
 
             auth.antMatchers("/api/auth/admin").hasRole("ADMIN");
