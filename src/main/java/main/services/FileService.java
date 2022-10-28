@@ -64,7 +64,7 @@ public class FileService {
 
         Blob blob = storage.create(blobInfo, Files.readAllBytes(file.toPath()));
 
-        String name_encode = URLEncoder.encode(name, StandardCharsets.UTF_8).toString();
+        String name_encode = URLEncoder.encode(name, "utf-8").toString();
 
         return "https://firebasestorage.googleapis.com/v0/b/" + bucketName + "/o/" + name_encode + "?alt=media";
     }
