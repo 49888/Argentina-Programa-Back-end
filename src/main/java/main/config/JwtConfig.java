@@ -40,6 +40,8 @@ public class JwtConfig {
 
         //!Proteccion contra ataques csrf
         http.csrf(csrf -> csrf.disable());
+
+        http.cors();
         
         http.headers().frameOptions().disable();
 
