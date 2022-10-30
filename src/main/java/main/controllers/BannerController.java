@@ -15,7 +15,7 @@ import main.dao.banner.BannerDao;
 import main.models.Banner;
 
 
-@RestController @RequestMapping("/api/banner") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app"})
+@RestController @RequestMapping("/api/banner") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org"})
 public class BannerController {
     
     @Autowired

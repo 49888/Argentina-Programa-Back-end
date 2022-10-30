@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import main.dao.projects.ProjectsDao;
 import main.models.Projects;
 
-@RestController @RequestMapping("/api/projects") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app"})
+@RestController @RequestMapping("/api/projects") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org"})
 public class ProjectsController {
     
 

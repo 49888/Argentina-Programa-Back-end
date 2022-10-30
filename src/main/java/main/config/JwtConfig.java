@@ -1,5 +1,8 @@
 package main.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +14,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import main.config.FilterAuthentication.AuthenticationFilter;
 import main.config.FilterAuthorization.AuthorizationFilter;
@@ -41,7 +49,7 @@ public class JwtConfig {
         //!Proteccion contra ataques csrf
         http.csrf(csrf -> csrf.disable());
 
-        http.cors();
+        http.cors(Customizer.withDefaults());
         
         http.headers().frameOptions().disable();
 
@@ -117,4 +125,39 @@ public class JwtConfig {
 
         return filter;
     }
+
+
+    // @Bean
+    // CorsConfigurationSource configurationSource(){
+
+
+    //     CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+    //     corsConfiguration.setAllowedOrigins(Arrays.asList("https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org"));
+
+    //     corsConfiguration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
+
+    //     corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization"));
+
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+    //     source.registerCorsConfiguration("/**", corsConfiguration);
+
+    //     return source;
+    // }
+
+    @Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+
+				registry.addMapping("/**")
+                    .allowedOrigins("https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org")
+                    .allowedMethods("GET", "PUT", "POST", "DELETE").
+                    allowedHeaders("Authorization");
+			}
+		};
+	}
 }

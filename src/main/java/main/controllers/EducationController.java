@@ -18,7 +18,7 @@ import main.dao.education.EducationDao;
 import main.models.Education;
 
 
-@RestController @RequestMapping("/api/education") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app"})
+@RestController @RequestMapping("/api/education") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org"})
 public class EducationController {
     
     @Autowired
