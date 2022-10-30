@@ -52,6 +52,8 @@ public class JwtConfig {
 
             auth.antMatchers("/").permitAll();
 
+            auth.antMatchers("/main/**").permitAll();
+
             auth.antMatchers("/api/auth/test").permitAll();
 
             auth.antMatchers("/api/banner/get").permitAll();

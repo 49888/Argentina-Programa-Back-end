@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import main.dao.experience.ExperienceDao;
 import main.models.Experience;
 
 
-@RestController @RequestMapping("/api/experience")
+@RestController @RequestMapping("/api/experience") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app"})
 public class ExperienceController {
     
     @Autowired

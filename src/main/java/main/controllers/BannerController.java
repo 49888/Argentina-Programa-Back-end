@@ -3,6 +3,7 @@ package main.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +15,7 @@ import main.dao.banner.BannerDao;
 import main.models.Banner;
 
 
-@RestController @RequestMapping("/api/banner")
+@RestController @RequestMapping("/api/banner") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app"})
 public class BannerController {
     
     @Autowired
