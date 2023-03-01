@@ -19,7 +19,7 @@ import main.dao.experience.ExperienceDao;
 import main.models.Experience;
 
 
-@RestController @RequestMapping("/api/experience") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org"})
+@RestController @RequestMapping("/api/experience") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org", "*"})
 public class ExperienceController {
     
     @Autowired

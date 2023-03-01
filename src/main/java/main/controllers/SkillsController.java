@@ -19,7 +19,7 @@ import main.models.Skill;
 import net.bytebuddy.asm.Advice.Return;
 
 
-@RestController @RequestMapping("/api/skills") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org"})
+@RestController @RequestMapping("/api/skills") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org", "*"})
 public class SkillsController {
 
     @Autowired

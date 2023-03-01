@@ -1,5 +1,6 @@
 package main.dao.banner;
 
+import java.io.Console;
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
@@ -8,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +20,8 @@ import main.services.FileService;
 
 @Repository @Transactional
 public class BannerDaoImp implements BannerDao {
+
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @PersistenceContext
     EntityManager entityManager;
@@ -81,6 +86,9 @@ public class BannerDaoImp implements BannerDao {
 
         }
         catch (Exception e) {
+
+            LOG.info(e.getMessage(), e);
+            
             url = e.getMessage();
         }
 
