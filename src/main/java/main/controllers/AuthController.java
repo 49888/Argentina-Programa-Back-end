@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import main.dao.auth.AuthDao;
 import main.models.UserDatabase;
 
-@RestController @RequestMapping("/api/auth") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org", "*"})
+@RestController @RequestMapping("/api/auth") @CrossOrigin(origins = {"https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org"})
 public class AuthController {
 
     private Logger LOG = LoggerFactory.getLogger(this.getClass());

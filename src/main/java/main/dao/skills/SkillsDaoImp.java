@@ -110,9 +110,9 @@ public class SkillsDaoImp implements SkillsDao {
 
             fileName = UUID.randomUUID().toString().concat(fileService.getExtension(fileName));
 
-            File file = fileService.convertToFile(multipartFile, fileName);
 
-            url = fileService.uploadFile(file, fileName);
+
+            url = fileService.uploadFile(multipartFile, fileName);
 
 
         }

@@ -41,11 +41,13 @@ public class FileService {
 
             fos.close();
         }
+
+
         
         return tempFile;
     }
 
-    public String uploadFile(File file, String name) throws IOException {
+    public String uploadFile(MultipartFile multipartFile, String name) throws IOException {
 
         String projectId = "argentina-programa-abb9b";
 
@@ -62,7 +64,7 @@ public class FileService {
 
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
 
-        Blob blob = storage.create(blobInfo, Files.readAllBytes(file.toPath()));
+        Blob blob = storage.create(blobInfo, multipartFile.getBytes());
 
         String name_encode = URLEncoder.encode(name, "utf-8").toString();
 

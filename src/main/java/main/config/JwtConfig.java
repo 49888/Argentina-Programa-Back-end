@@ -154,7 +154,7 @@ public class JwtConfig {
 			public void addCorsMappings(CorsRegistry registry) {
 
 				registry.addMapping("/**")
-                    .allowedOrigins("https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org", "*");
+                    .allowedOrigins("https://49888.github.io", "https://argentina-programa-abb9b.web.app", "https://www.test-cors.org");
 			}
 		};
 	}
